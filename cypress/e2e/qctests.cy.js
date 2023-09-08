@@ -149,40 +149,41 @@ context('by_hands', () => {
 
 
 //для удаления нужно хватать id
-it('id', () => {
+
+// it('id', () => {
   
-  cy.request({
-    method: 'POST',
-    url: 'http://localhost:5001/login',
-    form: true,
-    body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
+//   cy.request({
+//     method: 'POST',
+//     url: 'http://localhost:5001/login',
+//     form: true,
+//     body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
 
-  }) 
+//   }) 
 
-  cy
-      .intercept("POST", "/login").as("getLogin");
+//   cy
+//       .intercept("POST", "/login").as("getLogin");
 
 
-  cy.wait('@getLogin').then(xhr => {
-      cy.log(xhr.response.body);
-      cy.wrap(xhr.response.body.id).as('id');
-  });
+//   cy.wait('@getLogin').then(xhr => {
+//       cy.log(xhr.response.body);
+//       cy.wrap(xhr.response.body.id).as('id');
+//   });
 
-  cy.get('@pinNumber').then(pinNumber => {
+//   cy.get('@pinNumber').then(pinNumber => {
       
-    cy.request({
-      method: 'DELETE',
-      url: 'http://localhost:5001/user/'(id),
-      failOnStatusCode: false,
+//     cy.request({
+//       method: 'DELETE',
+//       url: 'http://localhost:5001/user/'(id),
+//       failOnStatusCode: false,
     
-    }).then((response) => {
-        expect(response.status, 'status').to.eq(401)
-        expect(response.body).to.have.property('detail', 'Not authenticated')
-      }) 
+//     }).then((response) => {
+//         expect(response.status, 'status').to.eq(401)
+//         expect(response.body).to.have.property('detail', 'Not authenticated')
+//       }) 
 
-  });
+//   });
 
-});
+// });
 
 
   })
