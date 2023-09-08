@@ -64,8 +64,6 @@ context('by_hands', () => {
       method: 'POST',
       url: 'http://localhost:5001/login',
       form: true,
-      // auth: {
-        // username, password}
       body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
 
     }).then((response) => {
@@ -87,11 +85,8 @@ context('by_hands', () => {
 
 //requests
 
-// const username = 'string'
-// const password = 'string'
-
   context('requests', () => {
-  it ('sends_success', () => {
+  it ('login+logout, whoami, and false delete jobs', () => {
 
     cy.visit('localhost:5001/docs#/') //cause don't like to see blank pages
     
@@ -99,8 +94,7 @@ context('by_hands', () => {
       method: 'POST',
       url: 'http://localhost:5001/login',
       form: true,
-      // auth: {
-        // username, password}
+      
       body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
 
     }).then((response) => {
@@ -113,7 +107,6 @@ context('by_hands', () => {
 
     }).then((response) => {
         expect(response.status, 'status').to.eq(200)
-        // expect(response.body).to.have.property('id', 5) 
         expect(response.body).to.have.property('username', 'string')
         expect(response.body).to.have.property('full_name', 'string')
       })  
@@ -131,59 +124,45 @@ context('by_hands', () => {
       method: 'DELETE',
       url: 'http://localhost:5001/user/5',
       failOnStatusCode: false,
-    
+   
     }).then((response) => {
         expect(response.status, 'status').to.eq(401)
         expect(response.body).to.have.property('detail', 'Not authenticated')
       })    
     })
 
+//delete job
 
+  it('delete job', () => {
 
+    cy.visit('localhost:5001/docs#/') //cause don't like to see blank pages
 
+    let id
 
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:5001/login',
+      form: true,
+      body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
+    }) 
 
+    cy.request({
+      method: 'GET',
+      url: 'http://localhost:5001/users/whoami',
 
+      }).then(response => {
+          expect(response.status).to.eq(200)
+          expect(response.body).to.be.an('object')
+          expect(response.body.id).to.exist
 
+      id = response.body.id
 
-
-
-//для удаления нужно хватать id
-
-// it('id', () => {
-  
-//   cy.request({
-//     method: 'POST',
-//     url: 'http://localhost:5001/login',
-//     form: true,
-//     body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
-
-//   }) 
-
-//   cy
-//       .intercept("POST", "/login").as("getLogin");
-
-
-//   cy.wait('@getLogin').then(xhr => {
-//       cy.log(xhr.response.body);
-//       cy.wrap(xhr.response.body.id).as('id');
-//   });
-
-//   cy.get('@pinNumber').then(pinNumber => {
-      
-//     cy.request({
-//       method: 'DELETE',
-//       url: 'http://localhost:5001/user/'(id),
-//       failOnStatusCode: false,
-    
-//     }).then((response) => {
-//         expect(response.status, 'status').to.eq(401)
-//         expect(response.body).to.have.property('detail', 'Not authenticated')
-//       }) 
-
-//   });
-
-// });
+    cy.request({
+      method: 'DELETE',
+      url: 'http://localhost:5001/user/' + id
+    })
+  })
+})
 
 
   })
