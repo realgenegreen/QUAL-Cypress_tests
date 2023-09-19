@@ -38,6 +38,7 @@ describe('reglog-forms-tests', () => {
             
             cy.wait('@getStatus', {timeout: 1000})
                 .then(interception => {
+                    console.log(response.body)
                     expect(interception.response.statusCode).to.equal(200)
                     })
    
@@ -64,7 +65,7 @@ describe('reglog-forms-tests', () => {
                 .then(interception => {
                     expect(interception.response.statusCode).to.equal(200)
                     })
-
+            
             CleanUP.DeleteUser()
                     
         })

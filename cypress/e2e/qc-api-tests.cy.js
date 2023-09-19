@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-import { CleanUP } from "../support/pages/common"
+import { Add, CleanUP, Enter } from "../support/pages/common"
 
 describe('qc-api-tests', () => {
 
@@ -61,15 +61,7 @@ context('by_hands', () => {
  
     cy.visit('localhost:5001/docs#/')
 
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:5001/login',
-      form: true,
-      body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
-
-    }).then((response) => {
-        expect(response.status, 'status').to.eq(200)
-        }) 
+    Enter.LoginUser('string', 'string')
 
     let id
 
@@ -79,13 +71,10 @@ context('by_hands', () => {
 
     }).then(response => {
         expect(response.status).to.eq(200)
-        expect(response.body).to.have.property('username', 'string')
-        expect(response.body).to.have.property('full_name', 'string')
         expect(response.body).to.be.an('object')
         expect(response.body.id).to.exist
   
       id = response.body.id
-        
 
       cy.get('.opblock-summary-delete > button:nth-child(1) > svg:nth-child(4)')
         .click()
@@ -108,30 +97,16 @@ context('by_hands', () => {
   context('by_requests', () => {
   it ('login+logout, whoami and false delete jobs', () => {
 
+    let usr = 'string'
+    let fnm = 'string'
+    let pwd = 'string'
+
     cy.visit('localhost:5001/docs#/') //cause don't like to see blank pages
     
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:5001/register',
-      body: {
-        'username': 'string', 
-        'full_name': 'string', 
-        'password': 'string'}
+    Add.RegUser(usr, fnm, pwd)
+    Enter.LoginUser(usr, pwd)
 
-    }).then((response) => {
-        expect(response.status, 'status').to.eq(200)
-        }) 
-
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:5001/login',
-      form: true,
-      body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
-
-    }).then((response) => {
-        expect(response.status, 'status').to.eq(200)
-        }) 
-    
+//false delete    
     let id
 
     cy.request({
@@ -140,8 +115,8 @@ context('by_hands', () => {
 
       }).then(response => {
           expect(response.status).to.eq(200)
-          expect(response.body).to.have.property('username', 'string')
-          expect(response.body).to.have.property('full_name', 'string')
+          expect(response.body).to.have.property('username', usr)
+          expect(response.body).to.have.property('full_name', pwd)
           expect(response.body).to.be.an('object')
           expect(response.body.id).to.exist
 
@@ -155,7 +130,7 @@ context('by_hands', () => {
             expect(response.status, 'status').to.eq(200)
             expect(response.body).to.have.property('message', 'logged out')
           })
-//false delete
+
         cy.request({
           method: 'DELETE',
           url: 'http://localhost:5001/user/' + id,
@@ -166,7 +141,8 @@ context('by_hands', () => {
             expect(response.body).to.have.property('detail', 'Not authenticated')
           })  
         })
-
+    
+    Enter.LoginUser(usr, pwd)
     CleanUP.DeleteUser() 
   })
 
