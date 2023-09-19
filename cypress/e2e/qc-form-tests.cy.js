@@ -1,11 +1,12 @@
 /// <reference types="Cypress" />
+import { FormTypingEx } from "../support/pages/forms"
 
 describe('reglog-forms-tests', () => {
-    
+
     context('register_form', () => {
 
         it('runs', () => {
-
+            
             cy.visit ('localhost:8080/register')
 
             cy.get('.register-btn')
@@ -15,14 +16,12 @@ describe('reglog-forms-tests', () => {
                 // .wait(2000)
             cy.contains('Ошибка')
                 .wait(500)
-
-            cy.get('#username')
-                .focus()
-                .type('string')
             
+            FormTypingEx.typeUsername('string')
+            
+            FormTypingEx.typePassword('string')
+
             cy.get('#password')
-                .focus()
-                .type('string')
                 .should('be.empty')
                 .get('.input-group-append > .btn')
                 .click()
@@ -30,17 +29,17 @@ describe('reglog-forms-tests', () => {
                 .should('be.empty')
                 .should('have.value', 'string')
             
-            cy.intercept('POST', 'http://localhost:5001/register').as('getData')
+            cy.intercept('POST', 'http://localhost:5001/register').as('getStatus')
 
             cy.get('.d-flex > .btn')
                 .click()
                 // .wait(2000)
             
-            cy.wait('@getData', {timeout: 1000})
+            cy.wait('@getStatus', {timeout: 1000})
                 .then(interception => {
                     expect(interception.response.statusCode).to.equal(200)
                     })
-                
+   
         })
 
     })
@@ -48,27 +47,24 @@ describe('reglog-forms-tests', () => {
     context('login_form', () => {
 
         it('runs', () => {
-
+            
             cy.visit ('localhost:8080/login')
 
-            cy.get('#username')
-                .focus()
-                .type('string')
+            FormTypingEx.typeUsername('string')
 
-            cy.get('#password')
-                .focus()
-                .type('string')
+            FormTypingEx.typePassword('string')
 
-            cy.intercept('POST', 'http://localhost:5001/login').as('getData')
+            cy.intercept('POST', 'http://localhost:5001/login').as('getStatus')
 
             cy.get('.btn')
                 .click()
 
-            cy.wait('@getData', {timeout: 1000})
+            cy.wait('@getStatus', {timeout: 1000})
                 .then(interception => {
                     expect(interception.response.statusCode).to.equal(200)
                     })
-
+                    
         })
     })
+
 })

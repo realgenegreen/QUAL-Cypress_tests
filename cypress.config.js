@@ -4,4 +4,10 @@ module.exports = {
       // implement node event listeners here
     },
   },
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "results/report.xml",
+    "toConsole": true
+  }
 };
+
