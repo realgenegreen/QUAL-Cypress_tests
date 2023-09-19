@@ -1,4 +1,5 @@
 /// <reference types="Cypress" />
+import { CleanUP } from "../support/pages/common"
 
 describe('qc-api-tests', () => {
 
@@ -154,7 +155,7 @@ context('by_hands', () => {
             expect(response.status, 'status').to.eq(200)
             expect(response.body).to.have.property('message', 'logged out')
           })
-
+//false delete
         cy.request({
           method: 'DELETE',
           url: 'http://localhost:5001/user/' + id,
@@ -165,41 +166,42 @@ context('by_hands', () => {
             expect(response.body).to.have.property('detail', 'Not authenticated')
           })  
         })
-     
+        
+    CleanUP.DeleteUser() 
   })
 
 //delete job
 
-  it('delete job', () => {
+  // it('delete job', () => {
 
-    cy.visit('localhost:5001/docs#/') //cause don't like to see blank pages
+  //   cy.visit('localhost:5001/docs#/') //cause don't like to see blank pages
 
-    let id
+  //   let id
 
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:5001/login',
-      form: true,
-      body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
-    }) 
+  //   cy.request({
+  //     method: 'POST',
+  //     url: 'http://localhost:5001/login',
+  //     form: true,
+  //     body: 'grant_type=&username=string&password=string&scope=&client_id=&client_secret='
+  //   }) 
 
-    cy.request({
-      method: 'GET',
-      url: 'http://localhost:5001/users/whoami',
+  //   cy.request({
+  //     method: 'GET',
+  //     url: 'http://localhost:5001/users/whoami',
 
-      }).then(response => {
-          expect(response.status).to.eq(200)
-          expect(response.body).to.be.an('object')
-          expect(response.body.id).to.exist
+  //     }).then(response => {
+  //         expect(response.status).to.eq(200)
+  //         expect(response.body).to.be.an('object')
+  //         expect(response.body.id).to.exist
 
-      id = response.body.id
+  //     id = response.body.id
 
-      cy.request({
-        method: 'DELETE',
-        url: 'http://localhost:5001/user/' + id
-        })
-      })
-  })
+  //     cy.request({
+  //       method: 'DELETE',
+  //       url: 'http://localhost:5001/user/' + id
+  //       })
+  //     })
+  // })
 
   })
 

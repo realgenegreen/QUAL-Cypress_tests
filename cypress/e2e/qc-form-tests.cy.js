@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 import { FormTypingEx } from "../support/pages/forms"
+import { CleanUP } from "../support/pages/common"
 
 describe('reglog-forms-tests', () => {
 
@@ -63,6 +64,8 @@ describe('reglog-forms-tests', () => {
                 .then(interception => {
                     expect(interception.response.statusCode).to.equal(200)
                     })
+
+            CleanUP.DeleteUser()
                     
         })
     })
