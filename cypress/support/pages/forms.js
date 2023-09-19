@@ -7,8 +7,9 @@ export class FormTyping{
     typePassword (password) {
         cy.get('#password')
                 .focus()
-                .type('string')
+                .type(password)
     }
 }
 
 export const FormTypingEx = new FormTyping
+
