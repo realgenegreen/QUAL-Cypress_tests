@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-import { Add, CleanUP, Enter } from "../support/pages/common"
+import { Job } from "../support/pages/common"
 
 describe('qc-api-tests', () => {
 
@@ -17,7 +17,7 @@ context('by_hands', () => {
       .clear()
       .type('{{}{enter}"username": "string", {enter}"full_name": "string", {enter}"password": "string"{enter}{}}')
     cy.get('.execute').click()
-        cy.reload()
+      cy.reload()
   })
 
 //login
@@ -61,7 +61,7 @@ context('by_hands', () => {
  
     cy.visit('localhost:5001/docs#/')
 
-    Enter.LoginUser('string', 'string')
+    Job.LoginUser('string', 'string')
 
     let id
 
@@ -103,8 +103,8 @@ context('by_hands', () => {
 
     cy.visit('localhost:5001/docs#/') //cause don't like to see blank pages
     
-    Add.RegUser(usr, fnm, pwd)
-    Enter.LoginUser(usr, pwd)
+    Job.RegUser(usr, fnm, pwd)
+    Job.LoginUser(usr, pwd)
 
 //false delete    
     let id
@@ -142,8 +142,8 @@ context('by_hands', () => {
           })  
         })
     
-    Enter.LoginUser(usr, pwd)
-    CleanUP.DeleteUser() 
+    Job.LoginUser(usr, pwd)
+    Job.DeleteUser() 
   })
 
   })

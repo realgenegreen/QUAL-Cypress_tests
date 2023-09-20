@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 import { FormTypingEx } from "../support/pages/forms"
-import { CleanUP } from "../support/pages/common"
+import { Job } from "../support/pages/common"
 
 describe('reglog-forms-tests', () => {
 
@@ -38,8 +38,8 @@ describe('reglog-forms-tests', () => {
             
             cy.wait('@getStatus', {timeout: 1000})
                 .then(interception => {
-                    console.log(response.body)
                     expect(interception.response.statusCode).to.equal(200)
+                    // console.log(interception.response.body)
                     })
    
         })
@@ -66,7 +66,7 @@ describe('reglog-forms-tests', () => {
                     expect(interception.response.statusCode).to.equal(200)
                     })
             
-            CleanUP.DeleteUser()
+            Job.DeleteUser()
                     
         })
     })

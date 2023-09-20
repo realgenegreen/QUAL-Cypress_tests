@@ -1,4 +1,5 @@
-export class DeleteJob {
+export class Jobs {
+
     DeleteUser () {
 
         let id
@@ -21,9 +22,7 @@ export class DeleteJob {
           })
 
     }
-}
 
-export class RegJob {
     RegUser (user, full_name, password) {
 
         cy.request({
@@ -38,9 +37,7 @@ export class RegJob {
               expect(response.status, 'status').to.eq(200)
               }) 
     }
-}
 
-export class LoginJob {
     LoginUser (user, password) {
         
         cy.request({
@@ -53,6 +50,4 @@ export class LoginJob {
     }
 }
 
-export const Add = new RegJob
-export const Enter = new LoginJob 
-export const CleanUP = new DeleteJob
+export const Job = new Jobs
