@@ -1,4 +1,4 @@
-export class FormTyping{
+export class Forms{
     typeUsername (username) {
         cy.get('#username')
                 .focus()
@@ -11,5 +11,5 @@ export class FormTyping{
     }
 }
 
-export const FormTypingEx = new FormTyping
+export const Form = new Forms
 

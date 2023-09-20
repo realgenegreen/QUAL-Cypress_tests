@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-import { FormTypingEx } from "../support/pages/forms"
+import { Form } from "../support/pages/forms"
 import { Job } from "../support/pages/common"
 
 describe('reglog-forms-tests', () => {
@@ -18,9 +18,9 @@ describe('reglog-forms-tests', () => {
             cy.contains('Ошибка')
                 .wait(500)
             
-            FormTypingEx.typeUsername('string')
+            Form.typeUsername('string')
             
-            FormTypingEx.typePassword('string')
+            Form.typePassword('string')
 
             cy.get('#password')
                 .should('be.empty')
@@ -52,9 +52,9 @@ describe('reglog-forms-tests', () => {
             
             cy.visit ('localhost:8080/login')
 
-            FormTypingEx.typeUsername('string')
+            Form.typeUsername('string')
 
-            FormTypingEx.typePassword('string')
+            Form.typePassword('string')
 
             cy.intercept('POST', 'http://localhost:5001/login').as('getStatus')
 
